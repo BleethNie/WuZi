@@ -17,6 +17,11 @@ import com.bleeth.event.Event;
 import com.bleeth.event.MyDataListenerAdapter;
 import com.bleeth.system.ASystem;
 import com.bleeth.system.NetSystem;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.CoolBar;
 
 
 public class BattleDialog {
@@ -60,7 +65,7 @@ public class BattleDialog {
 	 */
 	protected void createContents() {
 		shlWuzi = new Shell();
-		shlWuzi.setSize(1050, 650);
+		shlWuzi.setSize(1050, 670);
 		shlWuzi.setText("WuZi");
 
 		Point  point  = new Point();
@@ -70,36 +75,52 @@ public class BattleDialog {
 		composite.setBounds(0, 0, 600, 600);
 
 		Composite composite_1 = new Composite(shlWuzi, SWT.NONE);
+		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		composite_1.setBackgroundImage(SWTResourceManager.getImage(BattleDialog.class, "/com/bleeth/resource/image/控制面板.png"));
 		composite_1.setBounds(600, 0, 430, 300);
-
-		Button btnNewButton = new Button(composite_1, SWT.NONE);
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				if(isRun){
-
-				}else{
-					isRun = true;
-				}
-				system.gc = gc;
-				system.display = display;
-			}
-		});
-		btnNewButton.setBounds(29, 48, 80, 27);
-		btnNewButton.setText("开始");
-
-		Button btnNewButton_1 = new Button(composite_1, SWT.NONE);
-		btnNewButton_1.setBounds(184, 48, 80, 27);
-		btnNewButton_1.setText("暂停");
-
-		Button btnNewButton_2 = new Button(composite_1, SWT.NONE);
-		btnNewButton_2.setBounds(340, 48, 80, 27);
-		btnNewButton_2.setText("重新开始");
 
 		Label lblNewLabel = new Label(composite_1, SWT.NONE);
 		lblNewLabel.setBounds(29, 145, 391, 53);
 		lblNewLabel.setText("计时器");
+
+		ToolBar toolBar = new ToolBar(composite_1, SWT.FLAT | SWT.RIGHT);
+		toolBar.setBackground(SWTResourceManager.getColor(173, 216, 230));
+		toolBar.setBounds(0, 0, 430, 27);
+
+		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.NONE);
+		tltmNewItem.setToolTipText("开始");
+		tltmNewItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+			}
+		});
+		tltmNewItem.setHotImage(null);
+		tltmNewItem.setImage(SWTResourceManager.getImage(BattleDialog.class, "/com/bleeth/resource/icon/icons8-开始-20.png"));
+
+		ToolItem tltmNewItem_1 = new ToolItem(toolBar, SWT.NONE);
+		tltmNewItem_1.setToolTipText("暂停");
+		tltmNewItem_1.setImage(SWTResourceManager.getImage(BattleDialog.class, "/com/bleeth/resource/icon/icons8-暂停-20.png"));
+
+		ToolItem tltmNewItem_2 = new ToolItem(toolBar, SWT.NONE);
+		tltmNewItem_2.setToolTipText("撤销");
+		tltmNewItem_2.setImage(SWTResourceManager.getImage(BattleDialog.class, "/com/bleeth/resource/icon/icons8-撤销-20.png"));
+		tltmNewItem_2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
+
+		ToolItem tltmNewItem_3 = new ToolItem(toolBar, SWT.NONE);
+		tltmNewItem_3.setToolTipText("重新开始");
+		tltmNewItem_3.setImage(SWTResourceManager.getImage(BattleDialog.class, "/com/bleeth/resource/icon/icons8-重启-20.png"));
+
+		ToolItem tltmNewItem_4 = new ToolItem(toolBar, SWT.NONE);
+		tltmNewItem_4.setToolTipText("退出");
+		tltmNewItem_4.setImage(SWTResourceManager.getImage(BattleDialog.class, "/com/bleeth/resource/icon/icons8-关闭-20.png"));
+
+		ToolItem tltmNewItem_9 = new ToolItem(toolBar, SWT.NONE);
+		tltmNewItem_9.setImage(SWTResourceManager.getImage(BattleDialog.class, "/com/bleeth/resource/icon/icons8-Shuffle-20.png"));
 
 		Composite composite_2 = new Composite(shlWuzi, SWT.NONE);
 		composite_2.setBackgroundImage(SWTResourceManager.getImage(BattleDialog.class, "/com/bleeth/resource/image/控制面板.png"));
@@ -118,6 +139,18 @@ public class BattleDialog {
 		Button btnNewButton_4 = new Button(composite_2, SWT.NONE);
 		btnNewButton_4.setBounds(329, 263, 80, 27);
 		btnNewButton_4.setText("撤销");
+
+		Composite composite_3 = new Composite(shlWuzi, SWT.NONE);
+		composite_3.setBounds(0, 601, 1030, 30);
+
+		Label lblNewLabel_1 = new Label(composite_3, SWT.NONE);
+		lblNewLabel_1.setLocation(154, 0);
+		lblNewLabel_1.setSize(137, 27);
+		lblNewLabel_1.setText("aa");
+
+		Label label = new Label(composite_3, SWT.NONE);
+		label.setText("aa");
+		label.setBounds(0, 0, 137, 27);
 		composite.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -211,6 +244,4 @@ public class BattleDialog {
 		return	p.setPoint(x,y);
 
 	}
-
-
 }

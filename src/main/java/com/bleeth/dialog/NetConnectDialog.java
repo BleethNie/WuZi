@@ -70,14 +70,15 @@ public class NetConnectDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// 发送
+
 				String txt = text.getText();
-				if("".equals(txt)){
-					return ;
+
+				if (!ipCheck(txt) ^ ipCheck("192.168.1." + txt) ^ ipCheck("192.168." + txt)) {
+					btnNewButton.setToolTipText("IP地址不合法");
+					return;
 				}
-				if(!text.getText().contains(".")){
-					txt = "192.168.1."+txt;
-				}
-				ASystem net =new  NetSystem(txt);
+
+				ASystem net = new NetSystem("192.168." + txt);
 				shell.close();
 				BattleDialog bd = new BattleDialog();
 				bd.open(net);
@@ -108,27 +109,21 @@ public class NetConnectDialog {
 				});
 				th.start();
 
+				Display.getDefault().syncExec(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							for (int i = 0; i < NetWorkScanner.goodIP.size(); i++) {
 
-				 Display.getDefault().syncExec(new Runnable() {
-					              @Override
-					              public void run() {
-					            	  try {
-					            	  for (int i = 0; i < NetWorkScanner.goodIP.size(); i++) {
+								list.add(NetWorkScanner.goodIP.take());
 
-											list.add(NetWorkScanner.goodIP.take());
-
-					  				}
-					            	  } catch (InterruptedException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										}
-					              }
-					          });
-
-
-
-
-
+							}
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
 
 			}
 
@@ -149,11 +144,32 @@ public class NetConnectDialog {
 			public void widgetDefaultSelected(SelectionEvent e) {
 				int selectedItems = list.getSelectionIndex();
 				text.setText(list.getItem(selectedItems));
-		        System.err.println(list.getItem(selectedItems));
+				System.err.println(list.getItem(selectedItems));
 			}
 		});
 		list.setBounds(133, 27, 233, 104);
 
-
 	}
+
+	/**
+	 * 判断IP地址的合法性，这里采用了正则表达式的方法来判断 return true，合法
+	 */
+	public static boolean ipCheck(String text) {
+		if (text != null && !text.isEmpty()) {
+			// 定义正则表达式
+			String regex = "^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\."
+					+ "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\." + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
+					+ "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$";
+			// 判断ip地址是否与正则表达式匹配
+			if (text.matches(regex)) {
+				// 返回判断信息
+				return true;
+			} else {
+				// 返回判断信息
+				return false;
+			}
+		}
+		return false;
+	}
+
 }
