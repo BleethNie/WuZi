@@ -9,9 +9,13 @@ import com.bleeth.chess.Point;
 public class SingleSystem extends ASystem{
 
 	@Override
-	public Boolean isRight(int x, int y) {
-		// TODO Auto-generated method stub
-		return null;
+	public void init() {
+
+	}
+
+	@Override
+	public boolean isRight(int x, int y) {
+		return true;
 	}
 
 	@Override

@@ -1,12 +1,11 @@
 package com.bleeth.system;
 
-import java.util.List;
-
+import com.bleeth.chess.Player;
+import com.bleeth.event.MyData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Display;
 
-import com.bleeth.chess.Player;
-import com.bleeth.event.MyData;
+import java.util.List;
 
 public abstract class ASystem implements ISystem {
 
@@ -18,10 +17,10 @@ public abstract class ASystem implements ISystem {
 	public Display display;
 	public Boolean isRun;
 	public Boolean state = false;
-	public Boolean isBlack;
+	public Boolean isBlack = false;
 
 
-	public Boolean isWin(List<Integer> list) {
+	public boolean isWin(List<Integer> list) {
 		if (list == null || list.size() < 5) {
 			return false;
 		}

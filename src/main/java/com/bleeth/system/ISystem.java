@@ -1,23 +1,22 @@
 package com.bleeth.system;
 
-import java.util.List;
-
+import com.bleeth.chess.Point;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Display;
 
-import com.bleeth.chess.Point;
+import java.util.List;
 
 
 public interface ISystem {
 
-	default void init(){}
+    void init();
 
-	public Boolean isWin(List<Integer> list);
+    boolean isWin(List<Integer> list);
 
-	public  Boolean isRight(int x,int y);
+    boolean isRight(int x, int y);
 
-	public void playChess(Display display,GC gc,Point p);
+    void playChess(Display display, GC gc, Point p);
 
-	public int getWinMessage();
+    int getWinMessage();
 
 }

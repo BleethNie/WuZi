@@ -115,7 +115,7 @@ public class NetSystem extends ASystem{
 
 
 	@Override
-	public Boolean isRight(int x,int y) {
+	public boolean isRight(int x,int y) {
 		if(!state){
 			return false;
 		}
