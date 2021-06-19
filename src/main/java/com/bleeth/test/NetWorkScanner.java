@@ -9,14 +9,11 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import com.bleeth.event.MyData;
+import com.bleeth.event.NetData;
 
 public class NetWorkScanner {
 
@@ -158,10 +155,10 @@ public class NetWorkScanner {
 			Socket client = new Socket(ip, port);
 			client.setSoTimeout(2000);
 			final ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
-			out.writeObject(new MyData(200, 200, 200));
+			out.writeObject(new NetData(200, 200, 200));
 			final InputStream is = client.getInputStream();
 			final ObjectInputStream ois = new ObjectInputStream(is);
-			MyData md = (MyData) ((ObjectInputStream) ois).readObject();
+			NetData md = (NetData) ((ObjectInputStream) ois).readObject();
 			if (client != null) {
 				client.close();
 			}

@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import com.bleeth.event.MyData;
+import com.bleeth.event.NetData;
 
 public class ad {
 
@@ -21,10 +20,10 @@ public class ad {
 		try {
 			Socket client = new Socket("192.168.1.104", port);
 			final ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
-			out.writeObject(new MyData(200, 200, 200));
+			out.writeObject(new NetData(200, 200, 200));
 			final InputStream is = client.getInputStream();
 			final ObjectInputStream ois = new ObjectInputStream(is);
-			MyData md = (MyData) ((ObjectInputStream) ois).readObject();
+			NetData md = (NetData) ((ObjectInputStream) ois).readObject();
 			if (client != null) {
 				client.close();
 			}

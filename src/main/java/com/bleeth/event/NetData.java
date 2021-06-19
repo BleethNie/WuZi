@@ -3,7 +3,7 @@ package com.bleeth.event;
 import java.io.Serializable;
 
 
-public class MyData implements Serializable {
+public class NetData implements Serializable {
 
 	private static final long serialVersionUID = 9002831334L;
 	private transient MyDataListener listener;
@@ -11,14 +11,14 @@ public class MyData implements Serializable {
 	private int xPoint;
 	private int yPoint;
 
-	public MyData() {
+	public NetData() {
 		super();
 		xPoint = 0;
 		yPoint = 0;
 		messageType = 0;
 	}
 
-	public MyData(final int xPoint, final int yPoint, final int messageType) {
+	public NetData(final int xPoint, final int yPoint, final int messageType) {
 		super();
 		this.xPoint = xPoint;
 		this.yPoint = yPoint;
@@ -30,7 +30,7 @@ public class MyData implements Serializable {
 		this.listener = listener;
 	}
 
-	public void receive(final MyData wuData) {
+	public void receive(final NetData wuData) {
 		if (listener != null) {
 			xPoint = wuData.getXPoint();
 			yPoint = wuData.getYPoint();
@@ -39,7 +39,7 @@ public class MyData implements Serializable {
 		}
 	}
 
-	public void add(final MyData wuData) {
+	public void add(final NetData wuData) {
 		if (listener != null) {
 			xPoint = wuData.getXPoint();
 			yPoint = wuData.getYPoint();
@@ -69,8 +69,8 @@ public class MyData implements Serializable {
 		        return true;
 		    }
 
-		if (obj instanceof MyData) {
-			MyData otherMyData = (MyData)obj;
+		if (obj instanceof NetData) {
+			NetData otherMyData = (NetData)obj;
 
 			if (otherMyData.xPoint ==this.xPoint && otherMyData.yPoint == this.yPoint&& otherMyData.messageType == this.messageType) {
 				return true;

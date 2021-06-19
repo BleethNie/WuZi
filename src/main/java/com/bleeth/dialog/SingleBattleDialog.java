@@ -1,12 +1,9 @@
 package com.bleeth.dialog;
 
 import com.bleeth.chess.Point;
-import com.bleeth.event.Event;
-import com.bleeth.event.MyDataListenerAdapter;
-import com.bleeth.system.ASystem;
-import com.bleeth.system.NetSystem;
 import com.bleeth.system.SingleSystem;
-import com.bleeth.util.ImageUtil;
+import com.bleeth.system.WuZiSystem;
+import com.bleeth.util.ResourceUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -24,36 +21,38 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 
-public class BattleDialog {
+public class SingleBattleDialog {
 
-    protected Shell shlWuzi;
+    protected Shell singleBattleShell;
+
     private Display display;
-    Boolean isRun = false;
+
+    private  boolean isRun ;
+
+    private WuZiSystem wuZiSystem;
+
     private Text text;
+
     private Text text_1;
-    private ASystem system;
+
 
     public static void main(String[] args) {
-        BattleDialog bd = new BattleDialog();
-        SingleSystem singleSystem = new SingleSystem();
-        bd.open(singleSystem);
+        SingleBattleDialog dialog = new SingleBattleDialog();
+        dialog.open();
     }
 
     /**
      * Open the window.
      */
-    public void open(ASystem sys) {
-        System.err.println("进入对战页面");
+    public void open( ) {
         display = Display.getDefault();
+        wuZiSystem = new SingleSystem();
         createContents();
-        shlWuzi.open();
-        shlWuzi.layout();
-        system = sys;
-        System.err.println("system = sys;");
-        system.init();
+        singleBattleShell.open();
+        singleBattleShell.layout();
+        wuZiSystem.init();
 
-
-        while (!shlWuzi.isDisposed()) {
+        while (!singleBattleShell.isDisposed()) {
             if (!display.readAndDispatch()) {
                 display.sleep();
             }
@@ -64,25 +63,23 @@ public class BattleDialog {
      * Create contents of the window.
      */
     protected void createContents() {
-        shlWuzi = new Shell(SWT.CLOSE | SWT.MIN);
-        shlWuzi.setSize(1050, 670);
-        shlWuzi.setText("WuZi");
-        shlWuzi.setImage(ImageUtil.getImage(ImageUtil.RESOURCE_PATH + "/image/chess.png"));
+        singleBattleShell = new Shell(SWT.CLOSE | SWT.MIN);
+        singleBattleShell.setSize(1050, 670);
+        singleBattleShell.setText("WuZi");
+        singleBattleShell.setImage(ResourceUtil.getImage(ResourceUtil.RESOURCE_PATH + "/image/chess.png"));
 
         Point point = new Point();
-        Composite composite = new Composite(shlWuzi, SWT.NONE);
+        Composite composite = new Composite(singleBattleShell, SWT.NONE);
         GC gc = new GC(composite);
-        composite.setBackgroundImage(ImageUtil.getImage(ImageUtil.RESOURCE_PATH + "/image/棋盘.png"));
+        composite.setBackgroundImage(ResourceUtil.getImage(ResourceUtil.RESOURCE_PATH + "/image/棋盘.png"));
         composite.setBounds(0, 0, 600, 600);
 
-        Composite composite_1 = new Composite(shlWuzi, SWT.NONE);
+        Composite composite_1 = new Composite(singleBattleShell, SWT.NONE);
         composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-        composite_1.setBackgroundImage(ImageUtil.getImage(ImageUtil.RESOURCE_PATH + "/image/控制面板.png"));
+        composite_1.setBackgroundImage(ResourceUtil.getImage(ResourceUtil.RESOURCE_PATH + "/image/控制面板.png"));
         composite_1.setBounds(600, 0, 430, 300);
 
-        Label lblNewLabel = new Label(composite_1, SWT.NONE);
-        lblNewLabel.setBounds(29, 145, 391, 53);
-        lblNewLabel.setText("计时器");
+
 
         ToolBar toolBar = new ToolBar(composite_1, SWT.FLAT | SWT.RIGHT);
         toolBar.setBackground(SWTResourceManager.getColor(173, 216, 230));
@@ -98,15 +95,15 @@ public class BattleDialog {
             }
         });
         startToolItem.setHotImage(null);
-        startToolItem.setImage(ImageUtil.getImage(ImageUtil.RESOURCE_PATH + "/icon/icons8-开始-20.png"));
+        startToolItem.setImage(ResourceUtil.getImage(ResourceUtil.RESOURCE_PATH + "/icon/icons8-开始-20.png"));
 
         ToolItem tltmNewItem_1 = new ToolItem(toolBar, SWT.NONE);
         tltmNewItem_1.setToolTipText("暂停");
-        tltmNewItem_1.setImage(ImageUtil.getImage(ImageUtil.RESOURCE_PATH + "/icon/icons8-暂停-20.png"));
+        tltmNewItem_1.setImage(ResourceUtil.getImage(ResourceUtil.RESOURCE_PATH + "/icon/icons8-暂停-20.png"));
 
         ToolItem tltmNewItem_2 = new ToolItem(toolBar, SWT.NONE);
         tltmNewItem_2.setToolTipText("撤销");
-        tltmNewItem_2.setImage(ImageUtil.getImage(ImageUtil.RESOURCE_PATH + "/icon/icons8-撤销-20.png"));
+        tltmNewItem_2.setImage(ResourceUtil.getImage(ResourceUtil.RESOURCE_PATH + "/icon/icons8-撤销-20.png"));
         tltmNewItem_2.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -115,18 +112,24 @@ public class BattleDialog {
 
         ToolItem tltmNewItem_3 = new ToolItem(toolBar, SWT.NONE);
         tltmNewItem_3.setToolTipText("重新开始");
-        tltmNewItem_3.setImage(ImageUtil.getImage(ImageUtil.RESOURCE_PATH + "/icon/icons8-重启-20.png"));
+        tltmNewItem_3.setImage(ResourceUtil.getImage(ResourceUtil.RESOURCE_PATH + "/icon/icons8-重启-20.png"));
 
         ToolItem tltmNewItem_4 = new ToolItem(toolBar, SWT.NONE);
         tltmNewItem_4.setToolTipText("退出");
-        tltmNewItem_4.setImage(ImageUtil.getImage(ImageUtil.RESOURCE_PATH + "/icon/icons8-关闭-20.png"));
+        tltmNewItem_4.setImage(ResourceUtil.getImage(ResourceUtil.RESOURCE_PATH + "/icon/icons8-关闭-20.png"));
 
         ToolItem tltmNewItem_9 = new ToolItem(toolBar, SWT.NONE);
-        tltmNewItem_9.setImage(ImageUtil.getImage(ImageUtil.RESOURCE_PATH + "/icon/icons8-Shuffle-20.png"));
+        tltmNewItem_9.setImage(ResourceUtil.getImage(ResourceUtil.RESOURCE_PATH + "/icon/icons8-Shuffle-20.png"));
 
-        Composite composite_2 = new Composite(shlWuzi, SWT.NONE);
-        composite_2.setBackgroundImage(ImageUtil.getImage(ImageUtil.RESOURCE_PATH + "/image/控制面板.png"));
+        Composite composite_2 = new Composite(singleBattleShell, SWT.NONE);
+        composite_2.setBackgroundImage(ResourceUtil.getImage(ResourceUtil.RESOURCE_PATH + "/image/控制面板.png"));
         composite_2.setBounds(600, 300, 430, 300);
+
+
+        Label lblNewLabel = new Label(composite_1, SWT.NONE);
+        lblNewLabel.setBounds(29, 145, 391, 53);
+        lblNewLabel.setText("计时器");
+
 
         text = new Text(composite_2, SWT.BORDER);
         text.setBounds(24, 55, 385, 147);
@@ -142,7 +145,7 @@ public class BattleDialog {
         btnNewButton_4.setBounds(329, 263, 80, 27);
         btnNewButton_4.setText("撤销");
 
-        Composite composite_3 = new Composite(shlWuzi, SWT.NONE);
+        Composite composite_3 = new Composite(singleBattleShell, SWT.NONE);
         composite_3.setBounds(0, 601, 1030, 30);
 
         Label lblNewLabel_1 = new Label(composite_3, SWT.NONE);
@@ -156,18 +159,17 @@ public class BattleDialog {
         composite.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseUp(MouseEvent e) {
-                Point p = changePoint(e, point, system);
+                Point p = changePoint(e, point, wuZiSystem);
                 if (p == null) {
                     return;
                 }
 
-
-                system.playChess(display, gc, p);
-                if (system.getWinMessage() == 1) {
+                wuZiSystem.playChess(display, gc, p);
+                if (wuZiSystem.getWinMessage() == 1) {
                     WinDialog wd = new WinDialog();
                     wd.open("黑方");
                     isRun = !isRun;
-                } else if (system.getWinMessage() == 2) {
+                } else if (wuZiSystem.getWinMessage() == 2) {
                     WinDialog wd = new WinDialog();
                     wd.open("白方");
                     isRun = !isRun;
@@ -178,46 +180,18 @@ public class BattleDialog {
             }
         });
 
-        NetSystem.mmd.registerListener(new MyDataListenerAdapter() {
-            @Override
-            public void playData(final Event e) {
-                if (system.isBlack && !system.state) {
-                    int x = system.white.getRecord().get(system.white.getRecord().size() - 1) / 100;
-                    int y = system.white.getRecord().get(system.white.getRecord().size() - 1) % 100;
-                    system.white.playChess(display, gc, new Point(x, y));
-                }
-                if (!system.isBlack && !system.state) {
-                    int x = system.black.getRecord().get(system.black.getRecord().size() - 1) / 100;
-                    int y = system.black.getRecord().get(system.black.getRecord().size() - 1) % 100;
-                    system.black.playChess(display, gc, new Point(x, y));
-                }
-
-                Display.getDefault().syncExec(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        if (system.getWinMessage() == 1) {
-                            WinDialog wd = new WinDialog();
-                            wd.open("黑方");
-                            isRun = !isRun;
-                        } else if (system.getWinMessage() == 2) {
-                            WinDialog wd = new WinDialog();
-                            wd.open("白方");
-                            isRun = !isRun;
-                        } else {
-                            System.err.println("未出结果");
-                        }
-                    }
-
-                });
-            }
-        });
     }
 
 
-    public Point changePoint(MouseEvent e, Point p, ASystem system) {
+    /**
+     * 棋子边缘检测，防止棋子落入棋盘外，和非格子中
+     * @param e
+     * @param p
+     * @param system
+     * @return
+     */
+    public Point changePoint(MouseEvent e, Point p, WuZiSystem system) {
         System.out.println("changePoint");
-        System.err.println("isBlack" + system.isBlack + " " + "state" + system.state);
         if (!isRun) {
             return null;
         }

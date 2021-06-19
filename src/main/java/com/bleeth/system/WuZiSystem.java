@@ -1,23 +1,31 @@
 package com.bleeth.system;
 
 import com.bleeth.chess.Player;
-import com.bleeth.event.MyData;
+import com.bleeth.event.NetData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Display;
 
 import java.util.List;
 
-public abstract class ASystem implements ISystem {
+public abstract class WuZiSystem implements ISystem {
 
 	public Player white = new Player(Player.WHITE_COLOR);
+
 	public Player black = new Player(Player.BLACK_COLOR);
-	public static MyData data = new MyData();
-	public static MyData mmd = new MyData();
+
+	public static NetData chessData ;
+
+	public static NetData commandData;
+
 	public GC gc;
+
 	public Display display;
-	public Boolean isRun;
-	public Boolean state = false;
-	public Boolean isBlack = false;
+
+	public boolean isRun;
+
+	public boolean state ;
+
+	public boolean isBlack ;
 
 
 	public boolean isWin(List<Integer> list) {

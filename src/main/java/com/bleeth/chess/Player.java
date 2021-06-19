@@ -1,15 +1,12 @@
 package com.bleeth.chess;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.bleeth.util.ResourceUtil;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.wb.swt.SWTResourceManager;
 
-import com.bleeth.Constans;
-import com.bleeth.dialog.BasicDialog;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
 
@@ -22,7 +19,7 @@ public class Player {
 
 	public void playChess(Display display, GC gc,Point p) {
 		record.add(p.getX()*100+p.getY());
-		Image image=	SWTResourceManager.getImage(BasicDialog.class, "/com/bleeth/resource/image"+"/"+color+".png");
+		Image image=	ResourceUtil.getImage(ResourceUtil.RESOURCE_PATH + "/image/"+color+".png");
 		gc.drawImage(image, p.getX()*35+27, p.getY()*35+27);
 	}
 

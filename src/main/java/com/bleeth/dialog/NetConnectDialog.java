@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import com.bleeth.system.ASystem;
+import com.bleeth.system.WuZiSystem;
 import com.bleeth.system.NetSystem;
 import com.bleeth.test.NetWorkScanner;
 
@@ -78,10 +78,9 @@ public class NetConnectDialog {
 					return;
 				}
 
-				ASystem net = new NetSystem("192.168." + txt);
 				shell.close();
-				BattleDialog bd = new BattleDialog();
-				bd.open(net);
+				SingleBattleDialog bd = new SingleBattleDialog();
+				bd.open();
 
 			}
 		});

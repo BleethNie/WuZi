@@ -2,21 +2,21 @@ package com.bleeth.event;
 
 public class Event {
 
-	private MyData source;
+	private NetData source;
 
 	public Event() {
 
 	}
 
-	public Event(final MyData source) {
+	public Event(final NetData source) {
 		this.source = source;
 	}
 
-	public MyData getSource() {
+	public NetData getSource() {
 		return source;
 	}
 
-	public void setSource(final MyData source) {
+	public void setSource(final NetData source) {
 		this.source = source;
 	}
 	

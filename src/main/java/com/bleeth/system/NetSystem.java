@@ -5,11 +5,11 @@ import org.eclipse.swt.widgets.Display;
 
 import com.bleeth.chess.Point;
 import com.bleeth.event.Event;
-import com.bleeth.event.MyData;
+import com.bleeth.event.NetData;
 import com.bleeth.event.MyDataListenerAdapter;
 import com.bleeth.net.Server;
 
-public class NetSystem extends ASystem{
+public class NetSystem extends WuZiSystem {
 
 	int port ;
 	String ip;
@@ -30,19 +30,19 @@ public class NetSystem extends ASystem{
 		System.err.println("系统初始化开始");
 		int myTime = (int) (System.currentTimeMillis() % 10000000);
 		//int myTime = 8585390;
-		final Server com = new Server(data,ip,port);
+		final Server com = new Server(chessData,ip,port);
 		final Thread th = new Thread(com);
 		th.start();
 
-		data.registerListener(new MyDataListenerAdapter() {
+		chessData.registerListener(new MyDataListenerAdapter() {
 			@Override
 			public void addData(final Event e) {
 					if (e.getSource().getXPoint() == -1 && e.getSource().getYPoint() == -1) {
-						com.sentData(data);
+						com.sentData(chessData);
 						return;
 					}
 					//发送相同的数据，也让对方服务器设置flag=false;
-					com.sentData(data);
+					com.sentData(chessData);
 			}
 
 			@Override
@@ -53,10 +53,10 @@ public class NetSystem extends ASystem{
 							isBlack = true;
 							state = true;
 							//发送数据表示我方状态为true，且你方状态必须设置为false;
-							com.sentData(new MyData(112, 112, 112));
+							com.sentData(new NetData(112, 112, 112));
 						} else {
 							//发送数据表示我方状态为false，且你方状态必须设置为true;
-							com.sentData(new MyData(113, 113, 113));
+							com.sentData(new NetData(113, 113, 113));
 							System.err.println(com.getMyIp() + " 服务器为 flag =  false");
 							state = false;
 							isBlack = false;
@@ -85,13 +85,13 @@ public class NetSystem extends ASystem{
 				if(!isBlack&&!state){
 					black.getRecord().add(e.getSource().getXPoint()*100+e.getSource().getYPoint());
 				}
-				mmd.play(555);
+				commandData.play(555);
 				state = !state;
 			}
 		});
 
 		//初始化发送一条消息，用于分配双方状态
-		com.sentData(new MyData(111, 111, myTime));
+		com.sentData(new NetData(111, 111, myTime));
 	}
 
 
@@ -104,7 +104,7 @@ public class NetSystem extends ASystem{
 			white.playChess(display,gc ,p);
 
 		}
-		data.add(new MyData(p.getX(),p.getY(),0));
+		chessData.add(new NetData(p.getX(),p.getY(),0));
 		state = !state;
 	}
 
@@ -150,7 +150,6 @@ public class NetSystem extends ASystem{
 		}
 
 		return 0;
-
 	}
 
 

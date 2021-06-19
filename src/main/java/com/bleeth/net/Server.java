@@ -9,16 +9,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import com.bleeth.event.MyData;
+import com.bleeth.event.NetData;
 
 public class Server  implements Runnable {
 
 	private Boolean shutdown ;
 	private String otherIp = "";
-	private MyData wu;
+	private NetData wu;
 	final int port ;
 
-	public  Server(MyData data,String ip,int port){
+	public  Server(NetData data, String ip, int port){
 		shutdown = false;
 		wu = data;
 		otherIp = ip;
@@ -43,14 +43,14 @@ public class Server  implements Runnable {
 					final Socket socket = serverSocket.accept();
 					final InputStream inputStream = socket.getInputStream();
 					final ObjectInputStream oInputStream = new ObjectInputStream(inputStream);
-					MyData md = parse(oInputStream);
+					NetData md = parse(oInputStream);
 					System.err.println("解析出来的WuData为 " + md.toString());
 					if(md.getXPoint()==200){
 						final ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 						out.writeObject(md);
 					}else if(md.getXPoint()==-1){
 						shutdown = true;
-						sentData(new MyData(-1,-1,-1));
+						sentData(new NetData(-1,-1,-1));
 					}else{
 						wu.receive(md);
 					}
@@ -67,15 +67,15 @@ public class Server  implements Runnable {
 
 
 
-		public  MyData parse(final InputStream input) throws ClassNotFoundException, IOException {
+		public NetData parse(final InputStream input) throws ClassNotFoundException, IOException {
 			if (input instanceof ObjectInputStream) {
-				return (MyData) ((ObjectInputStream) input).readObject();
+				return (NetData) ((ObjectInputStream) input).readObject();
 			}
 			return null;
 		}
 
 
-		public void sentData(final MyData WuData){
+		public void sentData(final NetData WuData){
 			new Thread(new Runnable(){
 				public void run(){
 					try{
